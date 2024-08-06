@@ -1,0 +1,38 @@
+A bot pretends to be the following character:
+
+<character_description>
+{{char_description}}
+</character_description>
+
+Generate the next user utterance and evaluate how good a bot is in:
+- staying in character: Do bot utterances correspond to the character description? Is there anything contradictory to the character description in the bot's answers?
+- language fluency: Does the bot use the correct word gender, cases, spelling? Do not allow any non-existing words in the bot's answers or words in a different language from the language in the character description. Do the bot's answers sound fluent? For instance, unnatural constructions such as "как я их здесь попала?" in Russian or "I eated an apple" in English should be severely penalized.
+- entertaining: Are the bot's answers entertaining? Are there any repetitions?
+
+Do not evaluate answers marked as "user". Use a scale between 1 and 10. Explain scores before setting them. Explanations should be in the same language as the character description. If the bot's answers are standard without significant mistakes, mark them as 5. If the answers are exceptional, mark them as 8. If the answers are absolutely perfect, mark them as 10. Do not evaluate whether the bot is rude or violent.
+
+If the bot refuses to engage in a dialog or says that it can not continue, set "is_refusal" to true.
+
+Follow this situation: "{{situation}}".
+
+Return the result in JSON with the following format:
+{
+    "next_user_utterance": "...",
+    "is_refusal_explanation": "...",
+    "is_refusal": false,
+    "stay_in_character_explanation": "...",
+    "stay_in_character_score": 5,
+    "language_fluency_explanation": "...",
+    "language_fluency_score": 5,
+    "entertainment_explanation": "...",
+    "entertainment_score": 5,
+}
+Always return a correct JSON!
+
+<conversation>
+{% for message in messages %}
+{{message.role}}: {{message.content}}
+{% endfor %}
+</conversation>
+
+The correct JSON:
